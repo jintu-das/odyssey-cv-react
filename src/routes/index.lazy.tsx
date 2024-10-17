@@ -1,6 +1,6 @@
 import Navbar from "@/components/navbar";
 import { Button } from "@/components/ui/button";
-import { createLazyFileRoute } from "@tanstack/react-router";
+import { createLazyFileRoute, Link } from "@tanstack/react-router";
 import { MoveRightIcon } from "lucide-react";
 
 export const Route = createLazyFileRoute("/")({
@@ -33,9 +33,11 @@ function Index() {
               intuitive platform helps you highlight your skills and experience
               effectively.
             </p>
-            <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Button>Get started</Button>
-              <Button variant="ghost">
+            <div className="mt-10 flex items-center justify-center gap-x-4">
+              <Button size="lg" asChild>
+                <Link to="/app">Get started</Link>
+              </Button>
+              <Button size="lg" variant="ghost">
                 Learn more <MoveRightIcon className="h-4 w-4" />
               </Button>
             </div>
