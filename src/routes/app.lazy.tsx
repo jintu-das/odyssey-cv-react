@@ -1,7 +1,7 @@
 import Back from "@/components/back";
-import Download from "@/features/preview/components/download";
-import ResumeForm from "@/features/preview/components/form";
-import ResumePreview from "@/features/preview/components/resume-preview";
+import Download from "@/components/download";
+import ResumeForm from "@/components/resume-form";
+import ResumePreview from "@/components/resume-preview";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
 export const Route = createLazyFileRoute("/app")({

@@ -13,6 +13,7 @@ import { resumeFormSchema } from "@/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import TextEditor from "./ui/text-editor";
 
 export default function ResumeForm() {
   const updateResumeData = useResumeStore((state) => state.updateResumeData);
@@ -33,7 +34,6 @@ export default function ResumeForm() {
   console.log("error", form.formState.errors);
 
   function onSubmit(values: z.infer<typeof resumeFormSchema>) {
-    console.log(values);
     updateResumeData(values);
   }
 
@@ -43,8 +43,9 @@ export default function ResumeForm() {
         <div>
           <h2 className="text-xl font-bold">Personal Details</h2>
           <p className="text-base text-muted-foreground">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga
-            totam.
+            Enter your personal details below to get started. We will use this
+            information to generate your resume. You can always edit this
+            information later.
           </p>
         </div>
 
@@ -59,6 +60,21 @@ export default function ResumeForm() {
                   placeholder="e.g. Frontend Developer / Fullstack Developer"
                   {...field}
                 />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="full_name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Full Name</FormLabel>
+              <FormControl>
+                <Input {...field} />
               </FormControl>
 
               <FormMessage />
@@ -144,6 +160,8 @@ export default function ResumeForm() {
             )}
           />
         </div>
+
+        <TextEditor />
 
         <Button type="submit">Submit</Button>
       </form>
