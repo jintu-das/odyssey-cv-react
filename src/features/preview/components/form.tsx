@@ -8,23 +8,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useResumeStore } from "@/store/resume-store";
+import { resumeFormSchema } from "@/utils/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
-const formSchema = z.object({
-  job_title: z.string().optional(),
-  full_name: z.string().optional(),
-  email: z.string().email().optional(),
-  phone: z.string().optional(),
-  country: z.string().optional(),
-  state: z.string().optional(),
-  city: z.string().optional(),
-});
-
 export default function ResumeForm() {
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const updateResumeData = useResumeStore((state) => state.updateResumeData);
+
+  const form = useForm<z.infer<typeof resumeFormSchema>>({
+    resolver: zodResolver(resumeFormSchema),
     defaultValues: {
       job_title: "",
       full_name: "",
@@ -36,13 +30,16 @@ export default function ResumeForm() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  console.log("error", form.formState.errors);
+
+  function onSubmit(values: z.infer<typeof resumeFormSchema>) {
     console.log(values);
+    updateResumeData(values);
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <h2 className="text-xl font-bold">Personal Details</h2>
           <p className="text-base text-muted-foreground">
@@ -62,6 +59,21 @@ export default function ResumeForm() {
                   placeholder="e.g. Frontend Developer / Fullstack Developer"
                   {...field}
                 />
+              </FormControl>
+
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input {...field} />
               </FormControl>
 
               <FormMessage />
